@@ -20,6 +20,7 @@ project(${TARGET} LANGUAGES ASM C CXX)
 
 set(SOURCES
     "src/kernel/kernel_main.cc"
+    "src/kernel/util.cc"    
 )
 
 set(ASM_SOURCES

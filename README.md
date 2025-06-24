@@ -11,3 +11,19 @@ cmake --build .
 ```
 
 上記コマンドにより kernel.elf が作成されていればビルド成功です。
+
+```
+qemu-system-aarch64 \
+  -machine virt,virtualization=on,gic-version=2 \
+  -cpu cortex-a72 \
+  -smp 4 \
+  -m 1G \
+  -nographic \
+  -net none \
+  -chardev stdio,id=con,mux=on \
+  -serial chardev:con \
+  -mon chardev=con,mode=readline \
+  -kernel ./kernel.elf
+```  
+
+上記コマンドにより、テストメッセージがコンソール上に表示されれば起動成功です。
