@@ -49,8 +49,15 @@ PRIVATE_FUNCTION(bss_clear)
     ldr x1, =__bss_start
     ldr x2, =__bss_end
 .L__bss_loop:
-    cmp x1, x2
-    beq .L__bss_loop_done
+    sub x3, x2, x1
+    cbz x3, .L__bss_loop_done
+.L__bss_loop_16:
+    cmp x3, #16
+    blt .L__bss_loop_8
+    stp xzr, xzr, [x1]
+    add x1, x1, #16
+    b .L__bss_loop
+.L__bss_loop_8:
     str xzr, [x1]
     add x1, x1, #8
     b .L__bss_loop
