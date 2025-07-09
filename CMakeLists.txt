@@ -19,8 +19,11 @@ project(${TARGET} LANGUAGES ASM C CXX)
 #
 
 set(SOURCES
+    "src/arch/arm64/boot_el2.cc"
+    "src/arch/arm64/mmu.cc"
+    "src/common/cstring/memcpy.cc"
     "src/kernel/kernel_main.cc"
-    "src/kernel/util.cc"    
+    "src/kernel/util.cc"
 )
 
 set(ASM_SOURCES
