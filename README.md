@@ -17,7 +17,7 @@ qemu-system-aarch64 \
   -machine virt,virtualization=on,gic-version=2 \
   -cpu cortex-a72 \
   -smp 4 \
-  -m 1G \
+  -m 4G \
   -nographic \
   -net none \
   -chardev stdio,id=con,mux=on \
