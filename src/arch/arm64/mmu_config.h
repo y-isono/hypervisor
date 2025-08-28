@@ -15,4 +15,7 @@
 // Maximum level of page table
 #define CONFIG_MMU_TABLE_LEVEL_MAX 3
 
+// Maximum page table array size
+#define CONFIG_MMU_MAX_XLAT_TABLES 14
+
 #endif
