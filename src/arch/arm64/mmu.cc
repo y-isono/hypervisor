@@ -69,7 +69,7 @@ void Mmu::CheckMmuConfigs()
   uint64_t max_va = 0;
 
   // Check address space size
-  for (uint32_t i = 0; i < mmu_regions_kernel_.size(); i++)
+  for (uint32_t i = 0; i < mmu_regions_guest_.size(); i++)
   {
     auto *region = &mmu_regions_guest_[i];
     max_pa = std::max(max_pa, region->base_pa + region->size);
