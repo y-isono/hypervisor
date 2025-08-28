@@ -3,12 +3,14 @@
 
 extern "C" void kernel_main()
 {
-    uart_init();
-    uart_puts("Test from UART\n");
+    UART uart;
+
+    uart.init();
+    uart.puts("Test output from UART class\n");
 
     while (true)
     {
-        unsigned char c = uart_getc();
-        uart_putc(c);
+        unsigned char c = uart.getc();
+        uart.putc(c);
     }
 }
