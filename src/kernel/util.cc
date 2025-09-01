@@ -1,17 +1,17 @@
 #include "./util.h"
 #include "../platforms/qemu/config.h"
 
-// プライベートメソッドの実装
-void UART::mmio_write(uint32_t reg, uint32_t data) {
+// メモリマップドI/O用の関数
+static inline void mmio_write(uint32_t reg, uint32_t data) {
     *(volatile uint32_t*)reg = data;
 }
 
-uint32_t UART::mmio_read(uint32_t reg) {
+static inline uint32_t mmio_read(uint32_t reg) {
     return *(volatile uint32_t*)reg;
 }
 
-// パブリックメソッドの実装
-void UART::init() {
+// UART初期化関数
+void uart_init() {
     // UARTを無効化
     mmio_write(UART0_BASE + UART_CR, 0x0);
 
@@ -29,19 +29,22 @@ void UART::init() {
     mmio_write(UART0_BASE + UART_CR, (1 << 0) | (1 << 8) | (1 << 9));
 }
 
-void UART::putc(unsigned char c) {
+// 1文字送信
+void uart_putc(unsigned char c) {
     // 送信FIFOが空くのを待つ
     while (mmio_read(UART0_BASE + UART_FR) & FR_TXFF);
     mmio_write(UART0_BASE + UART_DR, c);
 }
 
-void UART::puts(const char* str) {
+// 文字列送信
+void uart_puts(const char* str) {
     while (*str) {
-        putc(*str++);
+        uart_putc(*str++);
     }
 }
 
-unsigned char UART::getc() {
+// 1文字受信
+unsigned char uart_getc() {
     // 受信FIFOにデータが来るのを待つ
     while (mmio_read(UART0_BASE + UART_FR) & FR_RXFE);
     return mmio_read(UART0_BASE + UART_DR);
