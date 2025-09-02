@@ -41,6 +41,7 @@ PRIVATE_FUNCTION(proc_hlt)
 
 PRIVATE_FUNCTION(kernel_boot_el2)
     bl bss_clear
+    bl boot_el2
     bl kernel_main
     b finish
 

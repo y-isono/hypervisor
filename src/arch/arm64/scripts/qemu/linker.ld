@@ -57,4 +57,32 @@ SECTIONS {
     __stack_end = __stack_start + (1024 * 1024) * 64;
   } > RAM
   __stack_size = __stack_end - __stack_start;
+
+    /* 64MB heap region for Hypervisor */
+  .heap : ALIGN(0x1000) {
+    __heap_start = .;
+    . = . + 1024 * 1024 * 64; 
+    . = ALIGN(0x1000);
+    __heap_end = .;
+  } > RAM
+  __heap_size = __heap_end - __heap_start;
+
+  /* 1MB uncached region for Hypervisor */
+  .uncached_space : ALIGN(0x1000) {
+    __uncached_space_start = .;
+    . = . + 1024 * 1024 * 1; 
+    . = ALIGN(0x1000);
+    __uncached_space_end = .;
+  } > RAM
+  __uncached_space_size = __uncached_space_end - __uncached_space_start;
+
+  /* 2G user memory region for guests */
+  .user_space : ALIGN(0x1000) {
+    __user_space_start = .;
+    . = . + 1024 * 1024 * 1024 * 2;
+    . = ALIGN(0x1000);
+    __user_space_end = .;
+  } > RAM
+  __user_space_size = __user_space_end - __user_space_start;
 }
+
